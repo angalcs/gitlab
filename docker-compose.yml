@@ -9,13 +9,12 @@ services:
       context: .
     environment:
       GITLAB_OMNIBUS_CONFIG: |
-        unicorn['worker_processes'] = 2
         external_url 'https://gitlab.parasite-resume.ir:8929'
         letsencrypt['enable'] = false
         gitlab_rails['smtp_pool'] = false
         gitlab_rails['gitlab_shell_ssh_port'] = 2224
         gitlab_rails['store_initial_root_password'] = true
-        puma['worker_processes'] = 0
+        puma['worker_processes'] = 1
         sidekiq['concurrency'] = 2
         sidekiq['max_concurrency'] = 5
         grafana['enable'] = false
