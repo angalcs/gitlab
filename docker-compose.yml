@@ -9,12 +9,13 @@ services:
       context: .
     environment:
       GITLAB_OMNIBUS_CONFIG: |
+        unicorn['worker_processes'] = 2
         external_url 'https://gitlab.parasite-resume.ir:8929'
         letsencrypt['enable'] = false
         gitlab_rails['smtp_pool'] = false
         gitlab_rails['gitlab_shell_ssh_port'] = 2224
         gitlab_rails['store_initial_root_password'] = true
-        puma['worker_processes'] = 1
+        puma['worker_processes'] = 0
         sidekiq['concurrency'] = 2
         sidekiq['max_concurrency'] = 5
         grafana['enable'] = false
@@ -22,29 +23,6 @@ services:
         alertmanager['enable'] = false
         postgresql['shared_buffers'] = "256MB"
         postgresql['auto_restart_on_version_change'] = false
-        gitlab_rails['env'] = {
-          'MALLOC_CONF' => 'dirty_decay_ms:1000,muzzy_decay_ms:1000'
-        }
-        gitaly['cgroups_count'] = 2
-        gitaly['cgroups_hierarchy_root'] = 'gitaly'
-        gitaly['cgroups_memory_enabled'] = true
-        gitaly['cgroups_memory_limit'] = 500000
-        gitaly['cgroups_cpu_enabled'] = true
-        gitaly['cgroups_cpu_shares'] = 512
-        gitaly['concurrency'] = [
-          {
-            'rpc' => "/gitaly.SmartHTTPService/PostReceivePack",
-            'max_per_repo' => 3
-          }, {
-            'rpc' => "/gitaly.SSHService/SSHUploadPack",
-            'max_per_repo' => 3
-          }
-        ]
-        gitaly['env'] = {
-          'LD_PRELOAD' => '/opt/gitlab/embedded/lib/libjemalloc.so',
-          'MALLOC_CONF' => 'dirty_decay_ms:1000,muzzy_decay_ms:1000',
-          'GITALY_COMMAND_SPAWN_MAX_PARALLEL' => '2'
-        }
     ports:
       - '8929:8929'
       - '2224:22'
