@@ -9,24 +9,25 @@ services:
       context: .
     environment:
       GITLAB_OMNIBUS_CONFIG: |
-        external_url 'https://gitlab.parasite-resume.ir:8929'
+        external_url 'https://gitlab.parasite-resume.ir'
         letsencrypt['enable'] = false
         gitlab_rails['smtp_pool'] = false
         gitlab_rails['gitlab_shell_ssh_port'] = 2224
-        gitlab_rails['store_initial_root_password'] = true
         puma['worker_processes'] = 1
-        sidekiq['concurrency'] = 2
-        sidekiq['max_concurrency'] = 5
+        sidekiq['concurrency'] = 1
+        sidekiq['max_concurrency'] = 2
         grafana['enable'] = false
         prometheus_monitoring['enable'] = false
         alertmanager['enable'] = false
         postgresql['shared_buffers'] = "256MB"
         postgresql['auto_restart_on_version_change'] = false
     ports:
-      - '8929:8929'
+      - '80:80'
+      - '443:443'
       - '2224:22'
     volumes:
       - '/srv/gitlab/config:/etc/gitlab'
       - '/srv/gitlab/logs:/var/log/gitlab'
       - '/srv/gitlab/data:/var/opt/gitlab'
     shm_size: '256m'
+# gitlab_rails['store_initial_root_password'] = true
