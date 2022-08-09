@@ -10,6 +10,9 @@ services:
           gitlab_rails['smtp_pool'] = false
           gitlab_rails['gitlab_shell_ssh_port'] = 2224
         
+          nginx['http2_enabled'] = false
+          registry_nginx['http2_enabled'] = false
+        
           external_url 'http://gitlab.parasite-resume.ir:8929'
           nginx['listen_port'] = 8929
           nginx['listen_https'] = false
@@ -18,6 +21,10 @@ services:
           registry_nginx['listen_port'] = 8929
           registry_nginx['listen_https'] = false
                 
+          unicorn['enable'] = true
+          unicorn['worker_processes'] = 1
+          
+          puma['enable'] = false
           puma['worker_processes'] = 0
           puma['per_worker_max_memory_mb'] = 1024
         
