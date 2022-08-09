@@ -9,8 +9,19 @@ services:
       context: .
     environment:
       GITLAB_OMNIBUS_CONFIG: |
-        external_url 'https://gitlab.parasite-resume.ir'
-        letsencrypt['enable'] = false
+        nginx['proxy_set_headers'] = {
+         "X-Forwarded-Proto" => "http",
+         "CUSTOM_HEADER" => "VALUE"
+        }
+        nginx['proxy_protocol'] = true
+        nginx['real_ip_header'] = 'X-Forwarded-For'
+        nginx['real_ip_recursive'] = 'on'
+        external_url 'https://gitlab.parasite-resume.ir:8929'
+        nginx['listen_port'] = 8929
+        nginx['listen_https'] = false
+        registry_external_url "https://registry.parasite-resume.ir:8929"
+        registry_nginx['listen_port'] = 8929
+        registry_nginx['listen_https'] = false
         gitlab_rails['smtp_pool'] = false
         gitlab_rails['gitlab_shell_ssh_port'] = 2224
         puma['worker_processes'] = 1
@@ -22,8 +33,7 @@ services:
         postgresql['shared_buffers'] = "256MB"
         postgresql['auto_restart_on_version_change'] = false
     ports:
-      - '80:80'
-      - '443:443'
+      - '8929:8929'
       - '2224:22'
     volumes:
       - '/srv/gitlab/config:/etc/gitlab'
