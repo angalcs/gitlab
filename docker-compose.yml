@@ -18,25 +18,28 @@ services:
           }
         
           letsencrypt['enabled'] = false
-          nginx['enable'] = true
-          nginx['redirect_http_to_https'] = true
+          nginx['redirect_http_to_https'] = false
           nginx['hsts_include_subdomains'] = false
+        
           nginx['referrer_policy'] = 'same-origin'
+          nginx['real_ip_header'] = 'X-Real-IP'
+          nginx['real_ip_recursive'] = 'on'
         
           external_url 'https://gitlab.parasite-resume.ir:8929'
           nginx['http2_enabled'] = false
           nginx['listen_port'] = 8929
           nginx['listen_https'] = false
-          nginx['real_ip_header'] = 'X-Forwarded-For'
-          nginx['real_ip_recursive'] = 'on'
           nginx['proxy_set_headers'] = {
             "X-Forwarded-Proto" => "https",
             "X-Forwarded-Ssl" => "on",
             "X-Forwarded-Protocol" => "https",
+            "Front-End-Https" => "on",
+            "X-Forwarded-Host" => "gitlab.parasite-resume.ir:8929",
             "X-Url-Scheme" => "https",
-            "Host" => "$http_host_with_default",
-            "X-Real-IP" => "$remote_addr",
-            "X-Forwarded-For" => "$proxy_add_x_forwarded_for"
+            "Access-Control-Allow-Origin" => "*",
+            "Host" => "gitlab.parasite-resume.ir:8929",
+            "X-Real-IP" => "162.55.12.128",
+            "X-Forwarded-For" => "162.55.12.128"
           }
         
           registry_external_url "https://registry.parasite-resume.ir:8929"
