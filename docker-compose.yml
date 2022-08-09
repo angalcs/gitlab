@@ -9,18 +9,37 @@ services:
           gitlab_rails['backup_keep_time'] = 14515200
           gitlab_rails['smtp_pool'] = false
           gitlab_rails['gitlab_shell_ssh_port'] = 2224
-        
-          nginx['http2_enabled'] = false
-          registry_nginx['http2_enabled'] = false
-        
+          
+          letsencrypt['enabled'] = false
+		  nginx['enable'] = true
+		  nginx['redirect_http_to_https'] = false
+    
           external_url 'http://gitlab.parasite-resume.ir:8929'
+          nginx['http2_enabled'] = false
           nginx['listen_port'] = 8929
           nginx['listen_https'] = false
-          
+          nginx['real_ip_header'] = 'X-Forwarded-For'
+          nginx['real_ip_recursive'] = 'on'
+          nginx['proxy_set_headers'] = {
+            "X-Forwarded-Proto" => "https",
+            "X-Forwarded-Ssl" => "on",
+            "X-Forwarded-Protocol" => "https",
+            "X-Url-Scheme" => "https",
+          }
+        
           registry_external_url "http://registry.parasite-resume.ir:8929"
+          registry_nginx['http2_enabled'] = false
           registry_nginx['listen_port'] = 8929
           registry_nginx['listen_https'] = false
-          
+          registry_nginx['real_ip_header'] = 'X-Forwarded-For'
+          registry_nginx['real_ip_recursive'] = 'on'
+          registry_nginx['proxy_set_headers'] = {
+            "X-Forwarded-Proto" => "https",
+            "X-Forwarded-Ssl" => "on",
+            "X-Forwarded-Protocol" => "https",
+            "X-Url-Scheme" => "https",
+          }
+        
           puma['worker_processes'] = 0
         
           sidekiq['concurrency'] = 1
