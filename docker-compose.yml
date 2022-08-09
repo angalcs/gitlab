@@ -11,14 +11,14 @@ services:
       GITLAB_OMNIBUS_CONFIG: |
         nginx['proxy_protocol'] = true
         nginx['proxy_set_headers'] = {
-  "X-Forwarded-Proto": "http",
-  "X-Frame-Options": "SAMEORIGIN",
-  "Content-Security-Policy": "upgrade-insecure-requests",
-  "Referrer-Policy": "origin",
-  "Access-Control-Allow-Origin": "*",
-  "Access-Control-Allow-Credentials": "true",
-  "Access-Control-Allow-Methods": "GET, POST, OPTIONS, PUT, PATCH, DELETE",
-  "Access-Control-Allow-Headers": "DNT, X-CustomHeader, Keep-Alive, User-Agent, X-Requested-With, If-Modified-Since, Cache-Control, Content-Type",
+  "X-Forwarded-Proto" => "http",
+  "X-Frame-Options" => "SAMEORIGIN",
+  "Content-Security-Policy" => "upgrade-insecure-requests",
+  "Referrer-Policy" => "origin",
+  "Access-Control-Allow-Origin" => "*",
+  "Access-Control-Allow-Credentials" => "true",
+  "Access-Control-Allow-Methods" => "GET, POST, OPTIONS, PUT, PATCH, DELETE",
+  "Access-Control-Allow-Headers" => "DNT, X-CustomHeader, Keep-Alive, User-Agent, X-Requested-With, If-Modified-Since, Cache-Control, Content-Type",
  }
         nginx['real_ip_header'] = 'X-Forwarded-For'
         nginx['real_ip_recursive'] = 'on'
