@@ -16,16 +16,9 @@ services:
             'findtime' => 60,
             'bantime' => 3600
           }
-        
-          letsencrypt['enabled'] = false
-          nginx['redirect_http_to_https'] = false
-          nginx['hsts_include_subdomains'] = false
-        
-          nginx['referrer_policy'] = 'same-origin'
-          nginx['real_ip_header'] = 'X-Real-IP'
-          nginx['real_ip_recursive'] = 'on'
-        
-          external_url 'https://gitlab.parasite-resume.ir'
+          
+          nginx['redirect_http_to_https'] = true
+          external_url 'https://gitlab.parasite-resume.ir/'
           nginx['http2_enabled'] = false
           nginx['listen_port'] = 80
           nginx['listen_https'] = false
@@ -33,19 +26,19 @@ services:
             "Access-Control-Allow-Origin" => "*"
           }
           nginx['proxy_set_headers'] = {
-            "X-Forwarded-Proto" => "https",
-            "X-Forwarded-Ssl" => "on",
-            "X-Forwarded-Protocol" => "https",
-            "Front-End-Https" => "on",
+            "X-Forwarded-Proto" => "http",
+            "X-Forwarded-Ssl" => "off",
+            "X-Forwarded-Protocol" => "http",
+            "Front-End-Https" => "off",
             "X-Forwarded-Host" => "gitlab.parasite-resume.ir",
-            "X-Url-Scheme" => "https",
+            "X-Url-Scheme" => "http",
             "Access-Control-Allow-Origin" => "*",
             "Host" => "gitlab.parasite-resume.ir",
             "X-Real-IP" => "162.55.12.128",
             "X-Forwarded-For" => "162.55.12.128"
           }
         
-          registry_external_url "https://registry.parasite-resume.ir"
+          registry_external_url "https://registry.parasite-resume.ir/"
           registry_nginx['http2_enabled'] = false
           registry_nginx['listen_port'] = 80
           registry_nginx['listen_https'] = false
