@@ -20,13 +20,8 @@ services:
           registry_external_url "http://registry.parasite-resume.ir:8929"
           registry_nginx['listen_port'] = 8929
           registry_nginx['listen_https'] = false
-                
-          unicorn['enable'] = true
-          unicorn['worker_processes'] = 1
           
-          puma['enable'] = false
           puma['worker_processes'] = 0
-          puma['per_worker_max_memory_mb'] = 1024
         
           sidekiq['concurrency'] = 1
           sidekiq['max_concurrency'] = 2
