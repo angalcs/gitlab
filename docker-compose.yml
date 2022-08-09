@@ -23,7 +23,10 @@ services:
           nginx['listen_port'] = 80
           nginx['listen_https'] = false
           nginx['add_headers'] = {
-            "Access-Control-Allow-Origin" => "*"
+            "Access-Control-Allow-Origin" => "*",
+            "Access-Control-Allow-Credentials" => "true",
+            "Access-Control-Allow-Methods" => "GET, POST, OPTIONS, PUT, PATCH, DELETE",
+            "Access-Control-Allow-Methods" => "DNT, X-CustomHeader, Keep-Alive, User-Agent, X-Requested-With, If-Modified-Since, Cache-Control, Content-Type"
           }
           nginx['proxy_set_headers'] = {
             "X-Forwarded-Proto" => "https",
@@ -41,13 +44,22 @@ services:
           registry_nginx['http2_enabled'] = false
           registry_nginx['listen_port'] = 80
           registry_nginx['listen_https'] = false
-          registry_nginx['real_ip_header'] = 'X-Forwarded-For'
-          registry_nginx['real_ip_recursive'] = 'on'
+          registry_nginx['add_headers'] = {
+            "Access-Control-Allow-Origin" => "*",
+            "Access-Control-Allow-Credentials" => "true",
+            "Access-Control-Allow-Methods" => "GET, POST, OPTIONS, PUT, PATCH, DELETE",
+            "Access-Control-Allow-Methods" => "DNT, X-CustomHeader, Keep-Alive, User-Agent, X-Requested-With, If-Modified-Since, Cache-Control, Content-Type"
+          }
           registry_nginx['proxy_set_headers'] = {
             "X-Forwarded-Proto" => "https",
-            "X-Forwarded-Ssl" => "on",
+            "X-Forwarded-Ssl" => "off",
             "X-Forwarded-Protocol" => "https",
+            "X-Forwarded-Host" => "registry.parasite-resume.ir",
             "X-Url-Scheme" => "https",
+            "Access-Control-Allow-Origin" => "*",
+            "Host" => "registry.parasite-resume.ir",
+            "X-Real-IP" => "162.55.12.128",
+            "X-Forwarded-For" => "162.55.12.128"
           }
         
           puma['worker_processes'] = 0
