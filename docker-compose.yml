@@ -14,7 +14,7 @@ services:
           nginx['enable'] = true
           nginx['redirect_http_to_https'] = false
     
-          external_url 'http://gitlab.parasite-resume.ir:8929'
+          external_url 'https://gitlab.parasite-resume.ir:8929'
           nginx['http2_enabled'] = false
           nginx['listen_port'] = 8929
           nginx['listen_https'] = false
@@ -27,7 +27,7 @@ services:
             "X-Url-Scheme" => "https",
           }
         
-          registry_external_url "http://registry.parasite-resume.ir:8929"
+          registry_external_url "https://registry.parasite-resume.ir:8929"
           registry_nginx['http2_enabled'] = false
           registry_nginx['listen_port'] = 8929
           registry_nginx['listen_https'] = false
