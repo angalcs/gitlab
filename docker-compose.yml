@@ -69,7 +69,7 @@ services:
         
           postgresql['shared_buffers'] = "256MB"
           postgresql['auto_restart_on_version_change'] = false
-    hostname: gitlab.parasite-resume.ir
+    hostname: gitlab.parasite-resume.ir:8929
     image: "gitlab/gitlab-ee:latest"
     ports:
       - "8929:8929"
