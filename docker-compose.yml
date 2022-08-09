@@ -34,6 +34,9 @@ services:
             "X-Forwarded-Ssl" => "on",
             "X-Forwarded-Protocol" => "https",
             "X-Url-Scheme" => "https",
+            "Host" => "$http_host_with_default",
+            "X-Real-IP" => "$remote_addr",
+            "X-Forwarded-For" => "$proxy_add_x_forwarded_for"
           }
         
           registry_external_url "https://registry.parasite-resume.ir:8929"
